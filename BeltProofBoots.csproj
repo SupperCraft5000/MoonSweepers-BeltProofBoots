@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Local game folder: copy GamePath.props.example to GamePath.props (ignored by git) or pass -p:GamePath="..." -->
+  <Import Project="GamePath.props" Condition="Exists('GamePath.props')" />
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>BeltProofBoots</AssemblyName>
+    <RootNamespace>BeltProofBoots</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <Version>0.1.0</Version>
+    <Authors>SupperCraft5000</Authors>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GamePath Condition="'$(GamePath)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Moon Sweepers</GamePath>
+    <BepInExPath>$(GamePath)\BepInEx</BepInExPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="$(BepInExPath)\core\BepInEx.Core.dll" Private="false" />
+    <Reference Include="$(BepInExPath)\core\BepInEx.Unity.IL2CPP.dll" Private="false" />
+    <Reference Include="$(BepInExPath)\core\0Harmony.dll" Private="false" />
+    <Reference Include="$(BepInExPath)\core\Il2CppInterop.Runtime.dll" Private="false" />
+    <Reference Include="$(BepInExPath)\core\Il2CppInterop.Common.dll" Private="false" />
+    <Reference Include="$(BepInExPath)\interop\Assembly-CSharp.dll" Private="false" />
+    <Reference Include="$(BepInExPath)\interop\Il2Cppmscorlib.dll" Private="false" />
+    <Reference Include="$(BepInExPath)\interop\UnityEngine.CoreModule.dll" Private="false" />
+    <Reference Include="$(BepInExPath)\interop\UnityEngine.PhysicsModule.dll" Private="false" />
+  </ItemGroup>
+
+  <Target Name="CopyToPlugins" AfterTargets="Build" Condition="Exists('$(BepInExPath)\plugins')">
+    <MakeDir Directories="$(BepInExPath)\plugins\BeltProofBoots" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(BepInExPath)\plugins\BeltProofBoots" />
+  </Target>
+
+</Project>
